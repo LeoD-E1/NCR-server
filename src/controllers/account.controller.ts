@@ -1,6 +1,7 @@
 import { Request, Response } from "restify";
 
 export const getAccountsByClient = async (req: Request, res: Response) => {
+  console.log(req.params.clientNumber);
   return res.json({
     message: "getAccountsByClient",
   });
