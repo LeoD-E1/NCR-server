@@ -3,13 +3,8 @@ import { ncrDB } from "../index";
 
 const clientSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  accounts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "account",
-    },
-  ],
+  clientNumber: { type: Number, required: true, unique: true },
 });
 
-const ClientModel = ncrDB.model("ClientModel", clientSchema);
+const ClientModel = ncrDB.model("clients", clientSchema);
 export default ClientModel;

@@ -3,16 +3,16 @@ import { ncrDB } from "../index";
 
 const transferSchema = new mongoose.Schema(
   {
-    from: { type: mongoose.Schema.Types.ObjectId, ref: "account" },
-    to: { type: mongoose.Schema.Types.ObjectId, ref: "account" },
+    clientNumber: { type: mongoose.Schema.Types.Number, ref: "clients" },
+    from: { type: mongoose.Schema.Types.Number, ref: "accounts" },
+    to: { type: mongoose.Schema.Types.Number, ref: "accounts" },
     amount: { type: Number, required: true },
-    date: { type: Date, required: true },
   },
   {
     timestamps: true,
   }
 );
 
-const TransferModel = ncrDB.model("TransferModel", transferSchema);
+const TransferModel = ncrDB.model("transfers", transferSchema);
 
 export default TransferModel;

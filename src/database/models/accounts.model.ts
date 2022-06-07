@@ -3,24 +3,13 @@ import { ncrDB } from "../index";
 
 const { Schema, Types } = mongoose;
 
-const accountSchema = new Schema(
-  {
-    name: { type: String, required: true },
-    type: { type: String, required: true },
-    balance: { type: Number, required: true },
-    clientNumber: { type: String, required: true },
-    transfers: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "TransferModel",
-      },
-    ],
-  },
-  {
-    timestamps: true,
-  }
-);
-
-const AccountModel = ncrDB.model("AccountModel", accountSchema);
+const accountSchema = new Schema({
+  name: { type: String, required: true },
+  type: { type: String, required: true },
+  accountNumber: { type: Number, required: true },
+  balance: { type: Number, required: true },
+  clientNumber: { type: mongoose.Schema.Types.Number, ref: "clients" },
+});
+const AccountModel = ncrDB.model("accounts", accountSchema);
 
 export default AccountModel;
