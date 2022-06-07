@@ -7,6 +7,7 @@ const transferSchema = new mongoose.Schema(
     from: { type: mongoose.Schema.Types.Number, ref: "accounts" },
     to: { type: mongoose.Schema.Types.Number, ref: "accounts" },
     amount: { type: Number, required: true },
+    date: { type: Date, default: new Date() },
   },
   {
     timestamps: true,

@@ -11,6 +11,12 @@ export const getAccountsByClient = async (req: Request, res: Response) => {
   try {
     const { clientNumber } = req.params;
 
+    if (!clientNumber) {
+      return res.send(400, {
+        message: "El número de cliente es obligatorio",
+      });
+    }
+
     const accountsOfClient = await AccountModel.find({
       clientNumber: parseInt(clientNumber),
     });
@@ -29,24 +35,35 @@ export const getAccountsByClient = async (req: Request, res: Response) => {
  * GET cuenta: retornará información de una cuenta y un cliente específico. Parámetros
  * obligatorios: número cliente, número de cuenta.
  */
-export const getAccountbyClientNumber = async (req: Request, res: Response) => {
+export const getAccountByClientNumber = async (req: Request, res: Response) => {
   const { clientNumber, accountNumber } = req.params;
-  const client = await ClientModel.findOne({ clientNumber });
-  if (!client) {
-    return res.send(404, {
-      message: "No se encontró el cliente",
-    });
-  }
-  const accountOfClient = await AccountModel.findOne({
-    accountNumber: parseInt(accountNumber),
-  });
-  if (!accountOfClient) {
-    return res.send(404, {
-      message: `el cliente ${clientNumber} no posee cuenta la cuenta ${accountNumber}`,
+
+  if (!clientNumber || !accountNumber) {
+    return res.send(400, {
+      message: "El número de cliente y de cuenta son obligatorios",
     });
   }
 
-  return res.json({
-    data: { accountOfClient, client },
-  });
+  try {
+    const client = await ClientModel.findOne({ clientNumber });
+    if (!client) {
+      return res.send(404, {
+        message: "No se encontró el cliente",
+      });
+    }
+    const accountOfClient = await AccountModel.findOne({
+      accountNumber: parseInt(accountNumber),
+    });
+    if (!accountOfClient) {
+      return res.send(404, {
+        message: `el cliente ${clientNumber} no posee cuenta la cuenta ${accountNumber}`,
+      });
+    }
+
+    return res.json({
+      data: { accountOfClient, client },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
