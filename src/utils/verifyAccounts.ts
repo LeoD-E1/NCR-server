@@ -8,12 +8,12 @@ declare interface Accounts {
 const verifyAccounts = async (accounts: Accounts, clientNumber: number) => {
   const { fromAccount, toAccount } = accounts;
 
-  const fromAccountExists = await AccountModel.find({
+  const fromAccountExists = await AccountModel.findOne({
     accountNumber: fromAccount,
     clientNumber,
   });
 
-  const toAccountExists = await AccountModel.find({
+  const toAccountExists = await AccountModel.findOne({
     accountNumber: toAccount,
     clientNumber,
   });
@@ -21,6 +21,7 @@ const verifyAccounts = async (accounts: Accounts, clientNumber: number) => {
   if (!fromAccountExists || !toAccountExists) {
     return false;
   }
+
   return true;
 };
 
