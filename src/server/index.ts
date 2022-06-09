@@ -10,9 +10,8 @@ const server = restify.createServer({
 });
 
 const cors = corsMiddleware({
-  preflightMaxAge: 5,
-  origins: ["http://localhost:3000"],
-  allowHeaders: ["API-Token"],
+  origins: ["http://localhost:3000", "http://localhost:3001"],
+  allowHeaders: ["API-Token", "*"],
   exposeHeaders: ["API-Token-Expiry"],
 });
 
