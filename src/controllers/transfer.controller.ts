@@ -1,8 +1,15 @@
 import { Request, Response } from "restify";
 import TransferModel from "../database/models/transfers.model";
 import verifyAccounts from "../utils/verifyAccounts";
-import AccountModel from "../database/models/accounts.model";
 import updateBalance from "../utils/updateBalance";
+import {
+  MANDATORY_PARAMETERS,
+  ACCOUNTS_DOES_NOT_EXIST,
+  UPDATE_BALANCE_ERROR,
+  TRANSFER_SUCCESS,
+  CLIENT_NUMBER_MANDATORY,
+  TRANSFERS_NOT_FOUND,
+} from "../constants/constants";
 
 /**
  * POST transferencia: creará una nueva transferencia entre dos cuentas propias.
@@ -14,7 +21,7 @@ export const transferToOwnAccount = async (req: Request, res: Response) => {
   if (!amount || !fromAccount || !toAccount) {
     return res.send(400, {
       status: 400,
-      message: "Algunos parámetros son obligatorios",
+      message: MANDATORY_PARAMETERS,
     });
   }
 
@@ -26,7 +33,8 @@ export const transferToOwnAccount = async (req: Request, res: Response) => {
 
     if (!verify) {
       return res.send(404, {
-        message: "Alguna de las cuentas no existe o no pertenece al cliente",
+        status: 404,
+        message: ACCOUNTS_DOES_NOT_EXIST,
       });
     }
 
@@ -37,7 +45,8 @@ export const transferToOwnAccount = async (req: Request, res: Response) => {
 
     if (!updatedBalance) {
       return res.send(500, {
-        message: "Error al actualizar el saldo de las cuentas",
+        status: 500,
+        message: UPDATE_BALANCE_ERROR,
       });
     }
 
@@ -50,11 +59,14 @@ export const transferToOwnAccount = async (req: Request, res: Response) => {
 
     return res.json({
       status: 200,
-      message: "Transferencia exitosa",
+      message: TRANSFER_SUCCESS,
       data: transfer,
     });
   } catch (error) {
-    console.log(error);
+    return res.send(500, {
+      status: 500,
+      message: error,
+    });
   }
 };
 /**
@@ -66,7 +78,7 @@ export const getTransfersByClient = async (req: Request, res: Response) => {
 
   if (!clientNumber) {
     return res.send(400, {
-      message: "El número de cliente es obligatorio",
+      message: CLIENT_NUMBER_MANDATORY,
     });
   }
 
@@ -76,11 +88,13 @@ export const getTransfersByClient = async (req: Request, res: Response) => {
     });
     if (!transfersOfClient.length) {
       return res.send(404, {
-        message: "No se encontraron transferencias",
+        message: TRANSFERS_NOT_FOUND,
       });
     }
     return res.json(transfersOfClient);
   } catch (error) {
-    console.log(error);
+    return res.send(500, {
+      message: error,
+    });
   }
 };
