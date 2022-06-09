@@ -6,8 +6,8 @@ const { Schema, Types } = mongoose;
 const accountSchema = new Schema({
   name: { type: String, required: true },
   type: { type: String, required: true },
-  accountNumber: { type: Number, required: true },
-  balance: { type: Number, required: true },
+  accountNumber: { type: Number, required: true, unique: true },
+  balance: { type: Number, required: true, default: 0 },
   clientNumber: { type: mongoose.Schema.Types.Number, ref: "clients" },
 });
 const AccountModel = ncrDB.model("accounts", accountSchema);
