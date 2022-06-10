@@ -1,12 +1,9 @@
 import { Router } from "restify-router";
-import {
-  getTransfersByClient,
-  transferToOwnAccount,
-} from "../../controllers/transfer.controller";
+import transferController from "../../controllers/Transfer";
 
 const transferRouter = new Router();
 
-transferRouter.get("/:clientNumber", getTransfersByClient);
-transferRouter.post("/", transferToOwnAccount);
+transferRouter.get("/:clientNumber", transferController.getTransfersByClient);
+transferRouter.post("/", transferController.transferToOwnAccount);
 
 export default transferRouter;

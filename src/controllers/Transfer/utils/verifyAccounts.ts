@@ -1,4 +1,4 @@
-import AccountModel from "../database/models/accounts.model";
+import AccountModel from "../../../database/models/accounts.model";
 
 declare interface Accounts {
   fromAccount: number;
