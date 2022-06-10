@@ -1,12 +1,12 @@
 import { Router } from "restify-router";
-import {
-  getAccountByClientNumber,
-  getAccountsByClient,
-} from "../../controllers/account.controller";
+import accountController from "../../controllers/Account/index";
 
 const accountRouter = new Router();
 
-accountRouter.get("/:clientNumber", getAccountsByClient);
-accountRouter.get("/:clientNumber/:accountNumber", getAccountByClientNumber);
+accountRouter.get("/:clientNumber", accountController.getAccountsByClient);
+accountRouter.get(
+  "/:clientNumber/:accountNumber",
+  accountController.getAccountByClientNumber
+);
 
 export default accountRouter;

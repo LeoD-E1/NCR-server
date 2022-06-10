@@ -1,9 +1,9 @@
 import { Router } from "restify-router";
-import { getClients, createClient } from "../../controllers/client.controller";
+import clientController from "../../controllers/Client/index";
 
 const clientRouter = new Router();
 
-clientRouter.get("/", getClients);
-clientRouter.post("/", createClient);
+clientRouter.get("/", clientController.getClients);
+clientRouter.post("/", clientController.createClient);
 
 export default clientRouter;

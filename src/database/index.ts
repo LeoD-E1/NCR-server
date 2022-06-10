@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
-const { MONGODB_ADDON_URI } = process.env;
-let url =
-  process.env.MONGODB_ADDON_URI || "mongodb://localhost:27017/ncr-server";
+let url = process.env.MONGO_URI || "";
 
 export const ncrDB = mongoose.createConnection(url);
+!ncrDB
+  ? console.log("Error connecting to database")
+  : console.log("Connected to database");
