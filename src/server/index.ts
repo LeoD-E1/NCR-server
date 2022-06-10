@@ -10,7 +10,11 @@ const server = restify.createServer({
 });
 
 const cors = corsMiddleware({
-  origins: ["http://localhost:3000", "http://localhost:3001"],
+  origins: [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://leoda-ncrclient.vercel.app",
+  ],
   allowHeaders: ["API-Token", "*"],
   exposeHeaders: ["API-Token-Expiry"],
 });
