@@ -14,6 +14,7 @@ const cors = corsMiddleware({
     "http://localhost:3000",
     "http://localhost:3001",
     "https://leoda-ncrclient.vercel.app",
+    "https://ncr-client-1ajhudod4-leoda.vercel.app",
   ],
   allowHeaders: ["API-Token", "*"],
   exposeHeaders: ["API-Token-Expiry"],
